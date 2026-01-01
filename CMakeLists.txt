@@ -47,6 +47,7 @@ target_sources(httcpp
     PRIVATE
         src/client.cpp
         src/response.cpp
+        src/httcpp_global.cpp
 )
 
 target_link_libraries(httcpp PRIVATE CURL::libcurl)

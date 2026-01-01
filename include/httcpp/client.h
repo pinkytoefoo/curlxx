@@ -8,7 +8,9 @@
 
 #include <curl/curl.h>
 
+#include "httcpp/httcpp_global.h"
 #include "httcpp/response.h"
+#include "httcpp/httcpp_global.h"
 
 struct curl_deleter
 {
@@ -45,6 +47,7 @@ public:
 private:
     curl_ptr curl_;
     struct curl_slist* headers_;
+    httcpp_manager& glob_manager_;
 };
 
 class curl_ex : public std::runtime_error

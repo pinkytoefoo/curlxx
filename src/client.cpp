@@ -5,9 +5,12 @@
 
 #include "httcpp/client.h"
 #include "httcpp/response.h"
+#include "httcpp/httcpp_global.h"
 
 client::client()
-    : curl_{curl_easy_init()}, headers_{nullptr}
+    : curl_{curl_easy_init()}
+    , headers_{nullptr}
+    , glob_manager_(httcpp_manager::instance())
 {
     if (!curl_.get())
         throw curl_ex("httcpp: curl_easy_init() failed!");
@@ -49,11 +52,8 @@ response client::get(std::string_view url, std::initializer_list<std::string> he
     set_headers(std::forward<std::initializer_list<std::string>>(headers));
 
     response res;
-    // attach headers
     curl_easy_setopt(curl_.get(), CURLOPT_HTTPHEADER, headers_);
-    // set response as write target
     curl_easy_setopt(curl_.get(), CURLOPT_WRITEDATA, &res);
-    // set url
     curl_easy_setopt(curl_.get(), CURLOPT_URL, url.data());
     
     CURLcode curl_status = curl_easy_perform(curl_.get());
@@ -112,5 +112,4 @@ void client::reset_headers()
 client::~client()
 {
     reset_headers();
-    curl_easy_cleanup(curl_.get());
 }
