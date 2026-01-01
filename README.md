@@ -1,2 +1,2 @@
 # httcpp
-curl wrapper written in c++
+cross-platform, curl wrapper written in c++
