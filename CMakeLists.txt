@@ -59,19 +59,14 @@ endif()
 target_include_directories(httcpp
     PUBLIC
     include
+    thirdparty/curl/include
 )
 
-option(httcpp_BUILD_TESTS "Build httcpp tests" ON)
-if(httcpp_BUILD_TESTS)
+option(HTTCPP_BUILD_TESTS "Build httcpp tests" ON)
+if(HTTCPP_BUILD_TESTS)
     add_executable(httcpp_test
         tests/test.cpp
     )
-
-    option(httcpp_BUILD_LIB "" ON)
-    if (httcpp_BUILD_LIB)
-        target_include_directories(httcpp_test PRIVATE include)
-        target_link_libraries(httcpp_test PRIVATE httcpp)
-        else()
-        target_include_directories(httcpp_test PRIVATE single_include)
-    endif()
+    target_include_directories(httcpp_test PRIVATE include)
+    target_link_libraries(httcpp_test PRIVATE httcpp)
 endif()
